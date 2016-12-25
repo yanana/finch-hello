@@ -1,0 +1,27 @@
+{
+  "source": {
+    "repoSource": {
+      "projectId": "yananananana",
+      "repoName": "finch-hello",
+      "branchName": "master"
+    }
+  },
+  "steps": [
+    {
+      "name": "hseeberger/scala-sbt",
+      "args": ["sbt", "assembly"],
+      "id": "assemble"
+    }, {
+      "name": "quay.io/yanana/cloud-builder-extractor",
+      "args": ["target/scala-2.11/hello.jar", "."],
+      "id": "extract"
+    }, {
+      "name": "gcr.io/cloud-builders/docker",
+      "args": ["build", "--tag=asia.gcr.io/$PROJECT_ID/finch-hello", "."],
+      "id": "imagize"
+    }
+  ],
+  "images": [
+    "asia.gcr.io/$PROJECT_ID/finch-hello"
+  ]
+}
